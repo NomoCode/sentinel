@@ -16,6 +16,23 @@ server:
   url_encoded: true
   prod_api_url: null # ie https://sideforge.io/api
 
+supabase:
+
+  provider:
+    name: discord
+    expire_token: 172800 # 2 days
+    refresh_cache: 120
+    store_unique_by_id: true
+
+  prod:
+    url: https://cbccisftkkikkbrgspta.supabase.co
+    anon_public_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNiY2Npc2Z0a2tpa2ticmdzcHRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIwNzQ5ODIsImV4cCI6MjAyNzY1MDk4Mn0.tAjbYWfFQeRVHQjBC3Y4nuD20_cT91570qirvctUX_4
+    secret_service: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNiY2Npc2Z0a2tpa2ticmdzcHRhIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjA3NDk4MiwiZXhwIjoyMDI3NjUwOTgyfQ.83CoQer9DE2u3RGTpzbbtSivf1wWDLzy_C-1wBGWK44
+  dev:
+    url: https://qjnuqpfuzozeiegnfwtx.supabase.co
+    anon_public_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqbnVxcGZ1em96ZWllZ25md3R4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIwNzQ5NzAsImV4cCI6MjAyNzY1MDk3MH0.f_0dZ-vR78tjTHn4TezZXsNCkeQpyXjpzcj3DTuRDE0
+    secret_service: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqbnVxcGZ1em96ZWllZ25md3R4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMjA3NDk3MCwiZXhwIjoyMDI3NjUwOTcwfQ.Rg1X25PS3MBlvVrBkSQ3MxLScbR7JZhU03pyxEeeWkM
+
 security:
 
   password:
