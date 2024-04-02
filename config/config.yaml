@@ -1,0 +1,62 @@
+
+server:
+  dev:
+    port: 3001
+    host: "localhost"
+  prod:
+    port: 3000
+    host: "localhost"
+
+  api_path: "api"
+
+  bandwith_limit: "5mb"
+  cors: {
+    origin: "*"
+  }
+  url_encoded: true
+  prod_api_url: null # ie https://sideforge.io/api
+
+security:
+
+  password:
+
+    string: "very_unique_hashed_string_here" # the actual password
+    enabled: true
+
+    header: "password" # authorization header the security system is looking for
+    
+  end_end_auth:
+
+    enabled: true
+    header: "Authorization" # authorization header the security system is looking for
+
+    # endpoints for the end to end authentication
+    endpoints:
+      - "dashboard"
+
+    # certain errors or conditions that will be ignored / accepted 
+    restrict:
+      error_found: false
+      no_user_found: false
+      invalid_user_id: false
+      no_user_id_found: false
+
+database:
+  postgresql:
+    
+    dev:
+      host: localhost
+      port: 5432
+      database: gamemod
+      user: postgres
+      password: BS103261
+    prod:
+      # TBD (will discuss when we get there)
+
+  redis:
+
+    dev:
+      port: 6379
+      host: localhost
+    prod:
+      # TBD (will discuss when we get there)

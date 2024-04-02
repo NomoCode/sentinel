@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es2020",
+      "noImplicitAny": false,
+      "sourceMap": false,
+      "outDir": "dist",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "declaration": true,
+      "importHelpers": true,
+      "forceConsistentCasingInFileNames": true,
+      "lib": [
+        "es2017",
+        "esnext.asynciterable",
+        "DOM"
+      ],
+      "moduleResolution": "node"
+    },
+    "include": [
+      "src/**/*",
+      "node/utils"
+    ],
+    "exclude": ["node_modules", "dist"]
+  }
+  
