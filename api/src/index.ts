@@ -14,6 +14,8 @@ import * as DatabaseLoader from "./utils/loaders/DatabaseLoader"
 import { RouteLoader } from "./utils/loaders/RouteLoader";
 import { write_to_logs } from "./utils/cache/Logger";
 import { MiddlewareLoader } from "./utils/loaders/MiddlewareLoader";
+import { createClient } from "@supabase/supabase-js";
+import { getSupabaseCredentials } from "./utils/cache/Process";
 
 // Web server instance
 const app: express = express();
@@ -22,6 +24,12 @@ const app: express = express();
 export const config: any = ConfigLoader("config.yaml");
 export const redis: Redis = new Redis(DatabaseLoader.getDatabaseCredentials('redis'));
 export const postgres: pg.Pool = new pg.Pool(DatabaseLoader.getDatabaseCredentials('postgresql'));
+export const supabase: any = createClient((getSupabaseCredentials()).url, (getSupabaseCredentials()).secret_service, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+});
 
 // Trust issue prevention
 app.set("trust proxy");
