@@ -1,1 +1,1 @@
-# game-moderation
+# sentinel
