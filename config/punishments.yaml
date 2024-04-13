@@ -1,0 +1,25 @@
+
+punishments:
+  - type: "warn"
+    identifier: "ip"
+
+    roadmap:
+      - offense: 2
+        action: "tempban"
+        duration: "1 day"
+      
+      - offense: 3
+        action: "tempban"
+        duration: "1 week"
+
+      - offense: 4
+        action: "tempban"
+        duration: "1 month"
+
+  - type: "tempban"
+    identifier: "ip"
+
+    default_duration: "1 week"
+
+  - type: "ban"
+    identifier: "ip"

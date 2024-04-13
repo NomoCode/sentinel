@@ -3,7 +3,23 @@
 import express from "express";
 
 // Configuration dependencies and helper functions
-import { config } from "..";
+import { config, supabase } from "..";
+
+/**
+ * See if a supabase user id is valid within the supabase authentication dashboard
+ * @param id string
+ * @returns boolean
+ */
+ export async function isUserValid(id: string): Promise<boolean | { valid: boolean, user: any }> {
+
+    const { data, error } = await supabase.auth.admin.getUserById(id);
+
+    if (error && config.security.end_end_auth.restrict.error_found) return false;
+    if (!data && config.security.end_end_auth.restrict.no_user_found) return false;
+
+    return { valid: true, user: data };
+
+}
 
 /**
  * See if the end_end_auth is set
@@ -42,10 +58,23 @@ export default async function End_End_Auth(req: express.Request, res: express.Re
     // TODO: Supabase validation 
 
     // Get the value of the end to end auth header
-    // const end_end_header_value: string = headers[end_end_header];
+    const end_end_header_value: string = headers[end_end_header];
+
+    if (!end_end_header_value) return res.json({
+        error: true,
+        message: `User ID was not specified, or returned undefined.`
+    })
 
     // See if they're a valid user
+    const isValidUser: boolean | object = await isUserValid(end_end_header_value);
 
+    if (!isValidUser) return res.json({
+        error: true,
+        message: `User ID is not valid.`
+    });
+
+    // See if they're an authorized user to even use the API
+    
     next();
 
 }

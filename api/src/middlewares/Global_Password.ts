@@ -20,6 +20,10 @@ export default async function Global_Password(req: express.Request, res: express
 
     // Get the array of header key/values
     const headers = req.headers;
+    const end_end_header_value: string = headers[config.security.end_end_auth.header];
+
+    // See if the global password is provided for this, if it is then we go to the next
+    if (end_end_header_value) return next();
 
     // Check to see if the header configuration is defined in the configuration
     if (!config.security.password.header) return res.json({

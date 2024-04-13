@@ -6,12 +6,13 @@ import { config } from "../..";
 
 import { KeyspaceNotif } from "../events/KeyspaceNotifs";
 import { write_to_logs } from "../cache/Logger";
+import { AuthorizedRecord, createAuthorizedUser, getAuthorizedUserByDiscordId } from "../database/Authorized";
 
 /**
  * Create all new tables inside the "sql" directory
  * @param pool - pg.Pool
  */
-export async function postgres(pool: pg.Pool): Promise<void> {
+export async function postgres(pool: pg.Pool): Promise<boolean> {
 
     fs.readdir("./sql", async (err: any, filenames: Array<string>) => {
         if (err) return console.error(err);
@@ -33,7 +34,10 @@ export async function postgres(pool: pg.Pool): Promise<void> {
             });
         });
 
-    })
+    });
+
+    return true;
+    
 
 }
 

@@ -7,6 +7,7 @@ import bodyparser from "body-parser";
 // Database dependencies, for global variables / constants
 import Redis from "ioredis";
 import * as pg from "pg";
+import { createClient } from "@supabase/supabase-js";
 
 // Helpers for loading 
 import { ConfigLoader } from "./utils/loaders/ConfigLoader";
@@ -14,14 +15,15 @@ import * as DatabaseLoader from "./utils/loaders/DatabaseLoader"
 import { RouteLoader } from "./utils/loaders/RouteLoader";
 import { write_to_logs } from "./utils/cache/Logger";
 import { MiddlewareLoader } from "./utils/loaders/MiddlewareLoader";
-import { createClient } from "@supabase/supabase-js";
 import { getSupabaseCredentials } from "./utils/cache/Process";
+import { loadAllAuthorizedUsersInConfig } from "./utils/database/Authorized";
 
 // Web server instance
 const app: express = express();
 
 // Global variables / loaders
 export const config: any = ConfigLoader("config.yaml");
+export const punishmentRoadmap: any = ConfigLoader("punishments.yaml");
 export const redis: Redis = new Redis(DatabaseLoader.getDatabaseCredentials('redis'));
 export const postgres: pg.Pool = new pg.Pool(DatabaseLoader.getDatabaseCredentials('postgresql'));
 export const supabase: any = createClient((getSupabaseCredentials()).url, (getSupabaseCredentials()).secret_service, {
@@ -66,5 +68,10 @@ app.listen(port, host, async () => {
         "connections",
         `Running on ${host}:${port} server.`
     );
+
+    // Wait 3 seconds to let database load
+    setTimeout(async () => {
+        await loadAllAuthorizedUsersInConfig();
+    }, 3000)
 
 });

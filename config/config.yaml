@@ -18,11 +18,15 @@ server:
 
 supabase:
 
+  # provider:
+  #   name: discord # can also do "email"
+  #   expire_token: 172800 # 2 days
+  #   refresh_cache: 120
+  #   store_unique_by_id: false
+
   provider:
     name: discord
-    expire_token: 172800 # 2 days
-    refresh_cache: 120
-    store_unique_by_id: true
+    store_unique_by_id: false
 
   prod:
     url: https://cbccisftkkikkbrgspta.supabase.co
@@ -35,6 +39,17 @@ supabase:
 
 security:
 
+  authorized_user:
+
+    # Create your own authorized user object, this allows the cloned repo to add your discord id to the database
+    # Allowing you to just login to the app and start adding
+    enabled: true
+    metadata:
+      discord_id: '601846796662210570'
+      moderator_id: null
+      authorized_by_id: '601846796662210570'
+      security_level: 3
+
   password:
 
     string: "very_unique_hashed_string_here" # the actual password
@@ -44,8 +59,8 @@ security:
     
   end_end_auth:
 
-    enabled: true
-    header: "Authorization" # authorization header the security system is looking for
+    enabled: true    
+    header: "authorization" # authorization header the security system is looking for
 
     # endpoints for the end to end authentication
     endpoints:
@@ -53,10 +68,10 @@ security:
 
     # certain errors or conditions that will be ignored / accepted 
     restrict:
-      error_found: false
-      no_user_found: false
-      invalid_user_id: false
-      no_user_id_found: false
+      error_found: true
+      no_user_found: true
+      invalid_user_id: true
+      no_user_id_found: true
 
 database:
   postgresql:
@@ -64,9 +79,9 @@ database:
     dev:
       host: localhost
       port: 5432
-      database: gamemod
-      user: postgres
-      password: BS103261
+      database: sentinel
+      user: sentinel
+      password: A#f@jh2APfyt
     prod:
       # TBD (will discuss when we get there)
 

@@ -4,7 +4,8 @@ import express from "express";
 
 import { PunishmentRecord } from "../utils/database/Punishments";
 import * as Punishments from "../utils/database/Punishments";
-import { postgres } from "..";
+import { postgres, redis } from "..";
+import { write_to_logs } from "../utils/cache/Logger";
 
 const router: express.Router = new express.Router();
 
@@ -24,6 +25,86 @@ router.get("/isBanned/:ip_address", async (req: express.Request, res: express.Re
     });
 
 })
+
+/**
+ * Get the insights of the latest punishments
+ */
+router.get("/insights", async (req: express.Request, res: express.Response) => {
+
+    // Get the ban punishments from last day, last week, and last month
+    const totalBans: number = (await Punishments.getPunishmentsFromType("ban")).length;
+    const totalBanChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("ban");
+
+    const banLastDayInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("ban", "1 day");
+    const banLastDayChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("ban", "1 day");
+
+    const banLastWeekInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("ban", "7 days");
+    const banLastWeekChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("ban", "7 days");
+
+    const banLastMonthInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("ban", "30 days");
+    const banLastMonthChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("ban", "30 days");
+
+    // Get warnings
+    const totalWarns: number = (await Punishments.getPunishmentsFromType("warn")).length;
+    const totalWarnChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("warn");
+
+    const warnLastDayInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("warn", "1 day");
+    const warnLastDayChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("warn", "1 day");
+
+    const warnLastWeekInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("warn", "7 days");
+    const warnLastWeekChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("warn", "7 days");
+
+    const warnLastMonthInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("warn", "30 days");
+    const warnLastMonthChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("warn", "30 days");
+
+    // Get tempbans
+    const totalTempbans: number = (await Punishments.getPunishmentsFromType("tempban")).length;
+    const totalTempbanChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("tempban");
+
+    const tempbanLastDayInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("tempban", "1 day");
+    const tempbanLastDayChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("tempban", "1 day");
+
+    const tempbanLastWeekInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("tempban", "7 days");
+    const tempbanLastWeekChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("tempban", "7 days");
+
+    const tempbanLastMonthInsights: Array<PunishmentRecord> = await Punishments.getPunishmentsFromElapsedDuration("tempban", "30 days");
+    const tempbanLastMonthChartData: any = await Punishments.getChartDetailsFromElapsedDurationForPunishmentType("tempban", "30 days");
+
+
+    return res.json({
+        bans: {
+            total: totalBans,
+            totalChartData: totalBanChartData,
+            lastDay: banLastDayInsights.length,
+            lastDayChartData: banLastDayChartData,
+            lastWeek: banLastWeekInsights.length,
+            lastWeekChartData: banLastWeekChartData,
+            lastMonth: banLastMonthInsights.length,
+            lastMonthChartData: banLastMonthChartData
+        },
+        warns: {
+            total: totalWarns,
+            totalChartData: totalWarnChartData,
+            lastDay: warnLastDayInsights.length,
+            lastDayChartData: warnLastDayChartData,
+            lastWeek: warnLastWeekInsights.length,
+            lastWeekChartData: warnLastWeekChartData,
+            lastMonth: warnLastMonthInsights.length,
+            lastMonthChartData: warnLastMonthChartData
+        },
+        tempbans: {
+            total: totalTempbans,
+            totalChartData: totalTempbanChartData,
+            lastDay: tempbanLastDayInsights.length,
+            lastDayChartData: tempbanLastDayChartData,
+            lastWeek: tempbanLastWeekInsights.length,
+            lastWeekChartData: tempbanLastWeekChartData,
+            lastMonth: tempbanLastMonthInsights.length,
+            lastMonthChartData: tempbanLastMonthChartData
+        }
+    })
+
+});
 
 /**
  * Get all the punishments through the API, we will add pagination to it as well
@@ -47,7 +128,7 @@ router.post("/filter", async (req: express.Request, res: express.Response) => {
 
     // Form the parent query
     let parentQuery: string = `
-        SELECT * FROM punishments WHERE 1=1
+        SELECT * FROM punishments WHERE active=true
     `
     let parentParams: Array<any> = [];
 
@@ -70,7 +151,7 @@ router.post("/filter", async (req: express.Request, res: express.Response) => {
 
     return res.json(rows);
 
-});
+})
 
 /**
  * Create a punishment record in the database
@@ -92,6 +173,31 @@ router.post("/", async (req: express.Request, res: express.Response) => {
             error: true,
             message: `Unexpected error, read 0 as the record id, please try again.`
         })
+    }
+
+    // Expire it after x time using moment
+    // We need to check if there's an actual duration specified
+    if (body.duration) {
+
+        // Convert the duration text to seconds
+        const seconds: number = Punishments.getTextTimeToSeconds(body.duration);
+
+        // We can't expire after 0 seconds, Redis gives an error message
+        if (seconds === 0) { return res.json({
+            error: true,
+            message: `Duration set was converted to 0 seconds, please make sure the query is correct.`
+        })};
+        
+        // Create the redis expire key
+        await redis.set(
+            `expired-punishment:${recordId}`,
+            JSON.stringify(body),
+            "EX",
+            seconds
+        );
+
+        write_to_logs("actions", `Expiring punishment record ${recordId} after ${seconds} seconds (${body.duration}).`);
+
     }
 
     return res.json({
@@ -118,5 +224,6 @@ router.delete("/:record_id", async (req: express.Request, res: express.Response)
 });
 
 export = {
-    router: router
+    router: router,
+    alternative: "dashboard"
 }

@@ -1,0 +1,79 @@
+
+.top-nav-container {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 24px;
+
+    border-bottom: 1px solid var(--primary-border-color);
+    /* background-color: var(--primary-second-left-sidebar-color); */
+    padding-bottom: 24px;
+}
+
+.top-nav-container .items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-nav-container .items .title p {
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "Inter";
+    color: var(--secondary-font-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.top-nav-container .items .identity {
+    display: flex;
+    flex-direction: row;
+    column-gap: 14px;
+}
+
+.top-nav-container .items .identity .text {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.top-nav-container .items .identity .text .id {
+    text-align: right;
+    font-size: 14px;
+}
+
+.top-nav-container .items .identity .text .username {
+    font-size: 24px;
+    font-family: "Sentient-Regular";
+    color: var(--secondary-font-color);
+}
+
+.top-nav-container .items .identity {
+    align-items: center;
+}
+
+.top-nav-container .items .identity img {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    border: 2px solid var(--secondary-font-color);
+}
+
+.top-nav-container .items .actions {
+    display: flex;
+    column-gap: 32px;
+}
+
+.top-nav-container .items .actions a {
+    text-decoration: none;
+    color: var(--primary-font-color);
+    font-family: "Inter";
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.top-nav-container .items .actions a:hover {
+    color: #BB9C67;
+    background-color: var(--primary-button-color);
+}

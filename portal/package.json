@@ -1,0 +1,31 @@
+{
+  "name": "portal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node script/glue.js dev && next dev",
+    "build": "node script/glue.js prod && next build",
+    "start": "node script/glue.js prod && next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
+    "@supabase/gotrue-js": "^2.62.2",
+    "@supabase/supabase-js": "^2.41.1",
+    "axios": "^1.6.8",
+    "chart.js": "^4.4.2",
+    "next": "14.1.4",
+    "react": "^18",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18",
+    "react-redux": "^9.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.2",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.4",
+    "typescript": "^5"
+  }
+}

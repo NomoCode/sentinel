@@ -1,0 +1,32 @@
+
+@import url('sentient.css');
+
+:root {
+
+    --primary-font-color: #9A9A9A;
+
+    --primary-background-color: #191919;
+    --primary-second-left-sidebar-color: #161616;
+    --primary-far-left-sidebar-color: #131313;
+
+    --primary-button-color: #1F1F1F;
+    --primary-border-color: #656565;
+    --primary-input-color: #272727;
+    --primary-tag-tip-color: #323232;
+
+    --secondary-font-color: #BB9C67;
+    --secondary-button-color: #494949;
+
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Inter;
+}
+
+body {
+    background-color: var(--primary-background-color);
+    color: var(--primary-font-color);
+}

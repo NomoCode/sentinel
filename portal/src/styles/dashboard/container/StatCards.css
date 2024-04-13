@@ -1,0 +1,68 @@
+
+.stat-card-container {
+
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust 200px as per your requirement */
+    gap: 20px; /* Adjust the gap between cards */
+
+}
+
+.stat-card-container .stat-card {
+    padding: 16px;
+    /* border: 1px solid var(--primary-border-color); */
+    border-radius: 4px;
+    background-color: var(--primary-button-color);
+}
+
+.stat-card-container .stat-card .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.stat-card-container .stat-card .header p {
+    font-family: "Sentient-Regular";
+    color: var(--primary-font-color);
+}
+
+.stat-card-container .stat-card .header .actions {
+    display: flex;
+    column-gap: 8px;
+}
+
+.stat-card-container .stat-card .header .actions p {
+    font-family: "Inter";
+    font-size: 14px;
+    color: rgb(95, 95, 95);
+    cursor: pointer;
+}
+
+.stat-card-container .stat-card .header .actions .active {
+    color: var(--secondary-font-color);
+    border-bottom: 1px solid var(--secondary-font-color);
+}
+
+.stat-card-container .stat-card .header svg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.stat-card-container .stat-card .content {
+    margin-top: 16px;
+}
+
+.stat-card-container .stat-card .content p {
+    color: var(--secondary-font-color);
+    font-size: 32px;
+    font-family: "Inter";
+}
+
+.stat-card-container .stat-card .content .notation {
+    margin-top: 4px;
+    font-size: 12px;
+    font-family: "Sentient-Regular";
+    color: rgb(95, 95, 95);
+}

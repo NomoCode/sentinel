@@ -1,0 +1,108 @@
+
+.navigation-container {
+    height: 100%;
+    min-width: 20%;
+
+    background-color: var(--primary-second-left-sidebar-color);
+    border-right: 1px solid var(--primary-border-color);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navigation-container .items {
+
+    padding: 16px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    height: 100%;
+
+}
+
+.navigation-container .items .branding {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 16px;
+}
+
+.navigation-container .items .branding p {
+    color: var(--secondary-font-color);
+    font-size: 32px;
+}
+
+.navigation-container .items .section {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.navigation-container .items .section .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.navigation-container .items .section .header h1 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--secondary-font-color);
+    font-family: "Inter";
+    text-transform: uppercase;
+}
+
+.navigation-container .items .section .header svg {
+    height: 24px;
+    width: 24px;
+}
+
+.navigation-container .items .section .links {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px;
+}
+
+.navigation-container .items .section .links .link {
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    border-radius: 4px;
+    column-gap: 10px;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary-font-color);
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.navigation-container .items .section .links .active {
+    color: #BB9C67;
+    background-color: var(--primary-button-color);
+}
+
+.navigation-container .items .section .links .link:hover {
+    background-color: var(--primary-button-color);
+}
+
+.navigation-container .items .section .links svg {
+    height: 16px;
+    width: 16px;
+}
+
+.navigation-container .items .maps {
+    padding: 16p;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.navigation-container .items .maps a {
+    color: var(--primary-font-color);
+    font-family: "Inter";
+}

@@ -1,0 +1,85 @@
+
+.filter-row {
+    position: relative;
+    display: flex;
+    column-gap: 48px;
+    align-items: center;
+}
+
+
+.filter-row .dropdown-wrapper {
+    position: relative;
+    width: 45%;
+    /* padding: 16px; */
+}
+
+.filter-row .dropdown-wrapper input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+    padding: 16px;
+    box-sizing: border-box;
+
+    border-radius: 4px;
+    background-color: var(--primary-button-color);
+    color: var(--primary-font-color);
+    font-family: "Inter";
+}
+
+.filter-row .dropdown-wrapper .dropdown-content {
+    position: absolute;
+    background-color: var(--primary-button-color);
+    border: 1px solid var(--primary-border-color);
+    border-radius: 4px;
+
+    width: 100%; /* Set width to 100% */
+    top: calc(100% + 5px); /* Adjust the distance below the input */
+    box-sizing: border-box;
+    z-index: 1;
+    max-height: 300px;
+    overflow: auto;
+}
+
+.filter-row .dropdown-wrapper .dropdown-content .item {
+    padding: 16px;
+    cursor: pointer;
+}
+
+.filter-row .dropdown-wrapper .dropdown-content .item p {
+    font-family: "Inter";
+}
+
+.filter-row .labels {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    
+    column-gap: 16px;
+    row-gap: 16px;
+}
+
+.filter-row .labels .label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 8px;
+
+    padding: 8px;
+    min-width: 100px;
+    border-radius: 4px;
+    background-color: var(--secondary-button-color);
+}
+
+.filter-row .labels .label .text {
+    font-size: 14px;
+    font-family: "Sentient-Regular";
+}
+
+.filter-row .labels .label .x {
+    rotate: 45deg;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--secondary-font-color)
+}

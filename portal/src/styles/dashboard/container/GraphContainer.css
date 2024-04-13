@@ -1,0 +1,47 @@
+
+.graph-container {
+
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust 200px as per your requirement */
+    gap: 20px; /* Adjust the gap between cards */
+
+    margin-top: 20px;
+
+}
+
+.graph-container .graph {
+    padding: 16px;
+    /* border: 1px solid var(--primary-border-color); */
+    border-radius: 4px;
+    background-color: var(--primary-button-color);
+}
+
+.graph-container .graph .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.graph-container .graph .header p {
+    font-family: "Sentient-Regular";
+    color: var(--primary-font-color);
+}
+
+.graph-container .graph .header .actions {
+    display: flex;
+    column-gap: 8px;
+}
+
+.graph-container .graph .header .actions p {
+    font-family: "Inter";
+    font-size: 14px;
+    color: rgb(95, 95, 95);
+    cursor: pointer;
+}
+
+.graph-container .graph .header .actions .active {
+    color: var(--secondary-font-color);
+    border-bottom: 1px solid var(--secondary-font-color);
+}

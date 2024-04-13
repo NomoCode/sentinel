@@ -12,10 +12,11 @@ CREATE TABLE IF NOT EXISTS punishments (
     duration TEXT,
     region TEXT,
     reason TEXT, --> The reason for the punishment, good for case support
+    active BOOLEAN,
     updated_at TIMESTAMP, --> If someone edits this punishment, this will update to the timestamp of action
     created_at TIMESTAMP --> The timestamp when someone created this punishment
 
 );
 
 ALTER TABLE punishments
-ADD COLUMN IF NOT EXISTS duration TEXT;
+ADD COLUMN IF NOT EXISTS active BOOLEAN;
